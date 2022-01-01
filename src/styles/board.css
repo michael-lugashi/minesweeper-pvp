@@ -1,0 +1,96 @@
+.board {
+ margin: auto;
+ margin-top: 15vh;
+}
+
+.board-header {
+ height: 75px;
+ width: 500px;
+ background-color: rgb(74, 117, 44);
+ display: flex;
+ align-items: center;
+ color: bisque;
+}
+.board-heading {
+ margin-left: 10px;
+ font-size: 25px;
+}
+
+.flag-count {
+ margin-left: auto;
+ margin-right: 10px;
+ font-size: 30px;
+}
+.grid {
+ height: 400px;
+ width: 500px;
+ display: flex;
+ flex-wrap: wrap;
+}
+
+.square {
+ height: 50px;
+ width: 50px;
+ display: inline;
+ align-items: center;
+ text-align: center;
+ font-size: 30px;
+}
+
+.patchedEven {
+ background-color: rgb(170, 215, 81);
+}
+.patchedOdd {
+ background-color: rgb(162, 209, 73);
+}
+
+.revealedEven {
+ background-color: rgb(229, 194, 159);
+}
+
+.revealedOdd {
+ background-color: rgb(215, 184, 153);
+}
+.value1 {
+ color: blue;
+ font-size: 35px;
+ font-weight: bold;
+}
+.value2 {
+ color: green;
+ font-size: 35px;
+ font-weight: bold;
+}
+.value3 {
+ color: red;
+ font-size: 35px;
+ font-weight: bold;
+}
+.value4 {
+ color: purple;
+ font-size: 35px;
+ font-weight: bold;
+}
+.value5 {
+ color: orange;
+ font-size: 35px;
+ font-weight: bold;
+}
+.value6 {
+ color: darkred;
+ font-size: 35px;
+ font-weight: bold;
+}
+.value7 {
+ color: black;
+ font-size: 35px;
+ font-weight: bold;
+}
+.value8 {
+ color: grey;
+ font-size: 35px;
+ font-weight: bold;
+}
+.value💣 {
+ background-color: red;
+}
