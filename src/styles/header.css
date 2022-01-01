@@ -1,0 +1,9 @@
+.header {
+ grid-area: 1 / 1 / 2 / 3;
+}
+
+.title-page {
+    text-align: center;
+    font-size: 3.5vw;
+    margin-top: 1.25vw;
+}
