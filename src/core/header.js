@@ -1,17 +1,19 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import '../styles/header.css';
 import io from 'socket.io-client';
+import socketContext from '../contexts/socket-connection/socket-context';
 
 function Header(props) {
- const socketRef = useRef();
+//  const socketRef = useRef();
  const [inGame, setInGame] = useState(false);
+ const socketConnection = useContext(socketContext)
  useEffect(() => {
   if (inGame) {
-   socketRef.current = io.connect('http://localhost:8080');
-   socketRef.current.on('messageBack', ({ name, message }) => {
+   socketConnection.current = io.connect('http://localhost:8080');
+   socketConnection.current.on('messageBack', ({ name, message }) => {
     console.log(name, message);
    });
-   socketRef.current.on('connect', () => {
+   socketConnection.current.on('connect', () => {
     console.log('connect');
    });
   }
@@ -25,13 +27,6 @@ function Header(props) {
     }}
    >
     Find Game
-   </button>
-   <button
-    onClick={() => {
-     socketRef.current.emit('message', { name: 'todd', message: 'wow' });
-    }}
-   >
-    emmit
    </button>
   </header>
  );
