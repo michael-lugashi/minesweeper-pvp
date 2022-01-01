@@ -46,6 +46,9 @@ function YourSquare({
           : 'revealedOdd'
         : ''
       } ${isRevealed && value ? 'value' + value : ''}`}
+      onClick={()=>{
+          
+      }}
   >
    {display(isFlagged, isRevealed, value)}
   </div>
