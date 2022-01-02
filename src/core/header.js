@@ -67,7 +67,7 @@ React.useEffect(() => {
 
  return (
   <header className="header">
-   <h1 className="title-page">Minesweep PvP 💣</h1>
+   <h1 className="title-page">Minesweeper PvP 💣</h1>
 
    {roomId ? (
     <div className="timer">
