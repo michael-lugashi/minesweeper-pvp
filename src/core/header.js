@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import '../styles/header.css';
 import io from 'socket.io-client';
 import socketContext from '../contexts/socket-connection/socket-context';
+import swal from 'sweetalert';
 
 function Header(props) {
  const [inGame, setInGame] = useState(false);
@@ -21,6 +22,10 @@ function Header(props) {
    });
 
    socketConnection.current.on('disconnect', () => {
+    setRoomId(null);
+    setSeconds(5);
+    setInGame(false);
+    setGameStarted(false);
     console.log('disconnect');
    });
    socketConnection.current.on('update-grid', () => {
@@ -33,6 +38,23 @@ function Header(props) {
    });
   }
  }, [inGame]);
+
+ useEffect(() => {
+  if (inGame) {
+   socketConnection.current.on('you-lost', () => {
+    swal('You Lost!', 'Better luck next time!', 'error');
+    socketConnection.current.emit('gameOver');
+   });
+   socketConnection.current.on('you-won', ({ type }) => {
+    if (type === 'completion') {
+     swal('You Won!', `It took you ${seconds} seconds!`, 'success');
+    } else {
+     swal('You Won!', 'Take cover! Your opponents mine went off!', 'success');
+    }
+    socketConnection.current.emit('gameOver');
+   });
+  }
+ }, [inGame, seconds]);
 
  useEffect(() => {
   let secondIntervalId = null;

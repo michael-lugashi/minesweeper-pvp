@@ -1,30 +1,33 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import socketContext from '../contexts/socket-connection/socket-context';
 
 function OpponentSquare({
  square: { isFlagged, isRevealed, value, isStartingSquare },
  rowNum,
  colNum,
 }) {
+ const { roomId } = useContext(socketContext);
+
  const gridColorDecider = (rowNum, colNum) => {
   const sum = rowNum + colNum;
   return sum % 2;
  };
 
  const display = (isFlagged, isRevealed, value) => {
-  // if (gameIsLost) {
-  //  if (value === '💣' && isFlagged) {
-  //   return '🚩';
-  //  }
-  //  if (value === '💣') {
-  //   return '💣';
-  //  }
-  //  if (isFlagged) {
-  //   return '❌';
-  //  }
-  // }
+  if (!roomId) {
+   if (value === '💣' && isFlagged) {
+    return '🚩';
+   }
+   if (value === '💣') {
+    return '💣';
+   }
+   if (isFlagged) {
+    return '❌';
+   }
+  }
 
   if (isFlagged) {
-   return '🚩'; 
+   return '🚩';
   }
 
   if (isRevealed && value) {

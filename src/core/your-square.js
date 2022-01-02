@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import socketContext from '../contexts/socket-connection/socket-context';
 
 function YourSquare({
@@ -16,17 +16,17 @@ function YourSquare({
  };
 
  const display = (isFlagged, isRevealed, value) => {
-  // if (gameIsLost) {
-  //  if (value === '💣' && isFlagged) {
-  //   return '🚩';
-  //  }
-  //  if (value === '💣') {
-  //   return '💣';
-  //  }
-  //  if (isFlagged) {
-  //   return '❌';
-  //  }
-  // }
+  if (!roomId) {
+   if (value === '💣' && isFlagged) {
+    return '🚩';
+   }
+   if (value === '💣') {
+    return '💣';
+   }
+   if (isFlagged) {
+    return '❌';
+   }
+  }
 
   if (isFlagged) {
    return '🚩';

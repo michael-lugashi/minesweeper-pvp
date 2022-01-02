@@ -16,9 +16,12 @@ function YourHeader(props) {
      }
     }
    });
+   socketConnection.current.on('disconnect', () => {
+    setFlagCount(10);
+   });
   }
  }, [socketConnection, roomId]);
-         
+
  return (
   <div className="board-header">
    <h3 className="board-heading">Your board</h3>
