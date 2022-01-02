@@ -8,7 +8,7 @@ function YourGrid(props) {
  const [grid, setGrid] = useState(Array(8).fill(Array(10).fill({})));
  const { socketConnection, roomId } = useContext(socketContext);
  const [firstClick, setFirstClick] = useState(true);
-
+                 
  React.useEffect(() => {
   if (roomId) {
    socketConnection.current.on('update-grid', ({ grid }) => {
