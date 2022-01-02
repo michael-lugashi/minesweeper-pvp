@@ -5,7 +5,7 @@ function YourHeader(props) {
  const { socketConnection, roomId } = useContext(socketContext);
  const [flagCount, setFlagCount] = useState(10);
 
- React.useEffect(() => {
+ useEffect(() => {
   if (roomId) {
    socketConnection.current.on('update-grid', ({ type, addedFlag }) => {
     if (type === 'flag') {

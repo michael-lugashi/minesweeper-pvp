@@ -8,7 +8,7 @@ function OpponentGrid(props) {
  const [grid, setGrid] = useState(Array(8).fill(Array(10).fill({})));
  const { socketConnection, roomId } = useContext(socketContext);
 
- React.useEffect(() => {
+ useEffect(() => {
   if (roomId) {
    socketConnection.current.on('update-opponent-grid', ({grid}) => {
     setGrid([...grid]);

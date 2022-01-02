@@ -1,25 +1,9 @@
 const app = require('express')();
-const express = require('express');
 const http = require('http').createServer(app);
-const path = require('path');
-const cors = require('cors');
 const { nanoid } = require('nanoid');
 const generateBoard = require('./utils/generateBoard');
 const updateGrid = require('./utils/update-grid');
 const port = 8080;
-
-app.use(cors());
-app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, '..', 'build')));
-app.use(express.static('public'));
-
-app.get('/', function (req, res) {
- res.sendFile(path.resolve(__dirname, '../build/index.html'));
-});
-
-app.get('/homepage', function (req, res) {
- res.send('homepage');
-});
 
 const io = require('socket.io')(http, {
  cors: {
