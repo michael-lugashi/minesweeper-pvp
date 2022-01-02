@@ -35,12 +35,16 @@ io.on('connection', (socket) => {
 
  socket.on('flag-square', ({ grid, rowNum, colNum, roomId }) => {
   grid[rowNum][colNum].isFlagged = !grid[rowNum][colNum].isFlagged;
-  socket
-   .to(roomId)
-   .emit('update-opponent-grid', { grid, type: 'flag', addedFlag: grid[rowNum][colNum].isFlagged });
-  io
-   .to(socket.id)
-   .emit('update-grid', { grid, type: 'flag', addedFlag: grid[rowNum][colNum].isFlagged });
+  socket.to(roomId).emit('update-opponent-grid', {
+   grid,
+   type: 'flag',
+   addedFlag: grid[rowNum][colNum].isFlagged,
+  });
+  io.to(socket.id).emit('update-grid', {
+   grid,
+   type: 'flag',
+   addedFlag: grid[rowNum][colNum].isFlagged,
+  });
  });
 });
 
@@ -54,14 +58,25 @@ const checkUserPair = (socket) => {
   const _roomId = nanoid();
   io.in([pair[0], pair[1]]).socketsJoin(_roomId);
   io.to(_roomId).emit('joined-room', { _roomId });
-  const grid = generateBoard(8, 10, 10);
+//   const grid = generateBoard(8, 10, 10);
   //   io.in(_roomId).emit('update-grid', { grid });
-  setTimeout(() => {
-   io.sockets.in(_roomId).emit('update-grid', { grid });
-   //   io.to(socket.id).emit('update-grid', { grid });
-   //   io.to(pair[0]).emit('update-grid', { grid });
-   //   io.to(pair[1]).emit('update-grid', { grid });
-   io.to(_roomId).emit('update-opponent-grid', { grid });
-  }, 1000);
+  startGame(_roomId);
+  //   setTimeout(() => {
+  //    io.sockets.in(_roomId).emit('update-grid', { grid });
+  //    io.to(_roomId).emit('update-opponent-grid', { grid });
+  //   }, 5000);
  }
+};
+
+const startGame = (_roomId, untilStart = 5) => {
+ setTimeout(() => {
+  if (untilStart === 0) {
+   const grid = generateBoard(8, 10, 10);
+   io.to(_roomId).emit('update-grid', { grid });
+   io.to(_roomId).emit('update-opponent-grid', { grid });
+  } else {
+   io.to(_roomId).emit('update-time', {_seconds: --untilStart});
+   startGame(_roomId, untilStart);
+  }
+ }, 1000); 
 };
