@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import socketContext from '../contexts/socket-connection/socket-context';
 
 function YourSquare({
@@ -10,6 +10,14 @@ function YourSquare({
  setFirstClick,
 }) {
  const { socketConnection, roomId } = useContext(socketContext);
+ useEffect(() => {
+  if (roomId) {
+   socketConnection.current.on('disconnect', () => {
+    setFirstClick(true);
+   });
+  }
+ });
+
  const gridColorDecider = (rowNum, colNum) => {
   const sum = rowNum + colNum;
   return sum % 2;
@@ -59,7 +67,6 @@ function YourSquare({
 
     if (roomId && !isRevealed) {
      setFirstClick(false);
-     console.log('click');
      socketConnection.current.emit('square-move', {
       grid,
       rowNum,

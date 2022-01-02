@@ -11,7 +11,6 @@ function OpponentGrid(props) {
  useEffect(() => {
   if (roomId) {
    socketConnection.current.on('update-opponent-grid', ({grid}) => {
-    console.log(grid);
     setGrid([...grid]);
    });
   }

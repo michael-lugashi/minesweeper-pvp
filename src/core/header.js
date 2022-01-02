@@ -13,12 +13,11 @@ function Header(props) {
   if (inGame) {
    socketConnection.current = io.connect('http://localhost:8080');
    socketConnection.current.on('connect', () => {
-    console.log('connect');
    });
 
    socketConnection.current.on('joined-room', ({ _roomId }) => {
     setRoomId(_roomId);
-    console.log('joined Room:' + _roomId);
+    // console.log('joined Room:' + _roomId);
    });
 
    socketConnection.current.on('disconnect', () => {
@@ -26,14 +25,12 @@ function Header(props) {
     setSeconds(5);
     setInGame(false);
     setGameStarted(false);
-    console.log('disconnect');
    });
    socketConnection.current.on('update-grid', () => {
     setGameStarted(true);
    });
 
    socketConnection.current.on('update-time', ({ _seconds }) => {
-    console.log('updated');
     setSeconds(() => _seconds);
    });
   }
