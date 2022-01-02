@@ -17,9 +17,6 @@ app.get('/', function (req, res) {
  res.sendFile(path.resolve(__dirname, '../build/index.html'));
 });
 
-app.get('/homepage', function (req, res) {
- res.send('homepage');
-});
 
 const io = require('socket.io')(http, {
  cors: {
