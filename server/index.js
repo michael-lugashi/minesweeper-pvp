@@ -20,6 +20,8 @@ app.get('/', function (req, res) {
 const io = require('socket.io')(http, {
  cors: {
   origin: [
+   'http://localhost:8080/',
+   'https://minesweeper-pvp.herokuapp.com/',
    'ws://localhost:8080/',
    'http://localhost:3001',
    'http://localhost:3000',
