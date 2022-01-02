@@ -44,6 +44,9 @@
  background-color: rgb(162, 209, 73);
 }
 
+.starting-square {
+ background-color: red;
+}
 .revealedEven {
  background-color: rgb(229, 194, 159);
 }

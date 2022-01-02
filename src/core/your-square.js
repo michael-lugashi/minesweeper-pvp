@@ -2,9 +2,10 @@ import React, { useContext } from 'react';
 import socketContext from '../contexts/socket-connection/socket-context';
 
 function YourSquare({
- square: { isFlagged, isRevealed, value },
+ square: { isFlagged, isRevealed, value, isStartingSquare },
  rowNum,
  colNum,
+ grid
 }) {
  const { socketConnection, roomId } = useContext(socketContext);
  const gridColorDecider = (rowNum, colNum) => {
@@ -47,10 +48,11 @@ function YourSquare({
           ? 'revealedEven'
           : 'revealedOdd'
         : ''
-      } ${isRevealed && value ? 'value' + value : ''}`}
+      } ${isRevealed && value ? 'value' + value : ''}
+      ${isStartingSquare ? 'starting-square' : ''}`}
    onClick={() => {
     if (socketConnection.current) {
-     socketConnection.current.emit('square-move', { rowNum, colNum, roomId });
+     socketConnection.current.emit('square-move', {grid ,rowNum, colNum, roomId });
     }
    }}
   >
