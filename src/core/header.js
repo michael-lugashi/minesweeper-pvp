@@ -11,7 +11,7 @@ function Header(props) {
  const { socketConnection, roomId, setRoomId } = useContext(socketContext);
  React.useEffect(() => {
   if (inGame) {
-   socketConnection.current = io.connect('https://minesweeper-pvp.herokuapp.com/');
+   socketConnection.current = io.connect('');
    socketConnection.current.on('connect', () => {
    });
 

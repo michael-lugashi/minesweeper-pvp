@@ -16,11 +16,11 @@ app.use(express.static('public'));
 app.get('/', function (req, res) {
  res.sendFile(path.resolve(__dirname, '../build/index.html'));
 });
-  
+
 const io = require('socket.io')(http, {
  cors: {
   origin: [
-   'https://minesweeper-pvp.herokuapp.com/',
+   '',
    'http://localhost:3001',
    'http://localhost:3000',
    'https://admin.socket.io',
