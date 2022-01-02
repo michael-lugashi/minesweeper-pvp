@@ -1,9 +1,25 @@
 .header {
  grid-area: 1 / 1 / 2 / 3;
+ text-align: center;
 }
 
 .title-page {
-    text-align: center;
     font-size: 3.5vw;
     margin-top: 1.25vw;
+}
+
+.timer{
+    font-size: 30px
+}
+
+.join-game {
+    background-color: transparent;
+    color: #a37656;
+    font-size: 30px;
+    margin: 0;
+    border: 3px solid
+}
+.join-game:hover {
+    color: #d4fbff;
+    background-color: #a37656;
 }

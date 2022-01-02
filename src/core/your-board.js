@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import YourHeader from './your-header';
 import YourGrid from './your-grid';
 

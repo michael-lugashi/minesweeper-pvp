@@ -1,7 +1,7 @@
 import React from 'react';
 
 function OpponentSquare({
- square: { isFlagged, isRevealed, value },
+ square: { isFlagged, isRevealed, value, isStartingSquare },
  rowNum,
  colNum,
 }) {
@@ -24,7 +24,7 @@ function OpponentSquare({
   // }
 
   if (isFlagged) {
-   return '🚩';
+   return '🚩'; 
   }
 
   if (isRevealed && value) {
@@ -45,7 +45,8 @@ function OpponentSquare({
           ? 'revealedEven'
           : 'revealedOdd'
         : ''
-      } ${isRevealed && value ? 'value' + value : ''}`}
+      } ${isRevealed && value ? 'value' + value : ''}
+      ${isStartingSquare ? 'starting-square' : ''}`}
   >
    {display(isFlagged, isRevealed, value)}
   </div>
