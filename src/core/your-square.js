@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import socketContext from '../contexts/socket-connection/socket-context';
 
 function YourSquare({
  square: { isFlagged, isRevealed, value },
  rowNum,
  colNum,
 }) {
+ const { socketConnection, roomId } = useContext(socketContext);
  const gridColorDecider = (rowNum, colNum) => {
   const sum = rowNum + colNum;
   return sum % 2;
@@ -46,9 +48,11 @@ function YourSquare({
           : 'revealedOdd'
         : ''
       } ${isRevealed && value ? 'value' + value : ''}`}
-      onClick={()=>{
-          
-      }}
+   onClick={() => {
+    if (socketConnection.current) {
+     socketConnection.current.emit('square-move', { rowNum, colNum, roomId });
+    }
+   }}
   >
    {display(isFlagged, isRevealed, value)}
   </div>

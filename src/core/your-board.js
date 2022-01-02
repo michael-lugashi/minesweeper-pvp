@@ -4,7 +4,7 @@ import YourGrid from './your-grid';
 import socketContext from '../contexts/socket-connection/socket-context';
 
 function YourBoard(props) {
-    const socketConnection = useContext(socketContext)
+    const {socketConnection, roomId} = useContext(socketContext)
  return (
   <div className='board'>
         <button

@@ -4,17 +4,18 @@ import io from 'socket.io-client';
 import socketContext from '../contexts/socket-connection/socket-context';
 
 function Header(props) {
-//  const socketRef = useRef();
+ //  const socketRef = useRef();
  const [inGame, setInGame] = useState(false);
- const socketConnection = useContext(socketContext)
+ const { socketConnection, setRoomId } = useContext(socketContext);
  useEffect(() => {
   if (inGame) {
    socketConnection.current = io.connect('http://localhost:8080');
-   socketConnection.current.on('messageBack', ({ name, message }) => {
-    console.log(name, message);
-   });
    socketConnection.current.on('connect', () => {
     console.log('connect');
+   });
+   socketConnection.current.on('joined-room', ({ _roomId }) => {
+    setRoomId(_roomId);
+    console.log('joined Room:' + _roomId);
    });
   }
  }, [inGame]);
