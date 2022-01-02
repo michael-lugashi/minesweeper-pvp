@@ -11,7 +11,7 @@ function Header(props) {
  const { socketConnection, roomId, setRoomId } = useContext(socketContext);
  React.useEffect(() => {
   if (inGame) {
-   socketConnection.current = io.connect('');
+   socketConnection.current = io.connect('ws://localhost:8080/');
    socketConnection.current.on('connect', () => {
    });
 

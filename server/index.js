@@ -20,7 +20,7 @@ app.get('/', function (req, res) {
 const io = require('socket.io')(http, {
  cors: {
   origin: [
-   '',
+   'ws://localhost:8080/',
    'http://localhost:3001',
    'http://localhost:3000',
    'https://admin.socket.io',
