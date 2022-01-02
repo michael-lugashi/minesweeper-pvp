@@ -27,14 +27,20 @@ io.on('connection', (socket) => {
  //  });
  socket.on('square-move', ({ grid, rowNum, colNum, roomId }) => {
   const updatedGrid = updateGrid(grid, rowNum, colNum);
-  socket.to(roomId).emit('update-opponent-grid', { grid: updatedGrid });
-  io.to(socket.id).emit('update-grid', { grid: updatedGrid });
+  socket
+   .to(roomId)
+   .emit('update-opponent-grid', { grid: updatedGrid, type: 'click' });
+  io.to(socket.id).emit('update-grid', { grid: updatedGrid, type: 'click' });
  });
 
  socket.on('flag-square', ({ grid, rowNum, colNum, roomId }) => {
-  grid[rowNum][colNum].isFlagged =  !grid[rowNum][colNum].isFlagged;
-  socket.to(roomId).emit('update-opponent-grid', { grid });
-  io.to(socket.id).emit('update-grid', { grid });
+  grid[rowNum][colNum].isFlagged = !grid[rowNum][colNum].isFlagged;
+  socket
+   .to(roomId)
+   .emit('update-opponent-grid', { grid, type: 'flag', addedFlag: grid[rowNum][colNum].isFlagged });
+  io
+   .to(socket.id)
+   .emit('update-grid', { grid, type: 'flag', addedFlag: grid[rowNum][colNum].isFlagged });
  });
 });
 
