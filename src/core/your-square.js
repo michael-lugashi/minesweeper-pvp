@@ -10,7 +10,7 @@ function YourSquare({
  setFirstClick,
 }) {
  const { socketConnection, roomId } = useContext(socketContext);
- useEffect(() => {
+ React.useEffect(() => {
   if (roomId) {
    socketConnection.current.on('disconnect', () => {
     setFirstClick(true);
