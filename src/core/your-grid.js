@@ -7,11 +7,11 @@ import { useEffect, useCallback } from 'react/cjs/react.development';
 function YourGrid(props) {
  const [grid, setGrid] = useState(Array(8).fill(Array(10).fill({})));
  const { socketConnection, roomId } = useContext(socketContext);
+ const [firstClick, setFirstClick] = useState(true);
 
  useEffect(() => {
   if (roomId) {
-   socketConnection.current.on('update-grid', ({grid}) => {
-    console.log(grid);
+   socketConnection.current.on('update-grid', ({ grid }) => {
     setGrid([...grid]);
    });
   }
@@ -27,6 +27,8 @@ function YourGrid(props) {
        rowNum={rowNum}
        colNum={colNum}
        grid={grid}
+       firstClick = {firstClick}
+       setFirstClick = {setFirstClick}
        key={`${rowNum}_${colNum}`}
       />
      );

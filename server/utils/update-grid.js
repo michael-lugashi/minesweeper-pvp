@@ -21,7 +21,7 @@ const updateGrid = (arr, row, col) => {
    !arr[single.row - 1][single.col - 1].isRevealed
   ) {
    flipped.push(arr[single.row - 1][single.col - 1]);
-  }
+  } 
   if (
    single.row < arr.length - 1 &&
    single.col < arr[0].length - 1 &&

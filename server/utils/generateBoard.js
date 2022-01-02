@@ -1,6 +1,6 @@
 function generateBoard(totalRows, totalCols, mines) {
- const startRow = Math.floor(Math.random() * 6 + 1);
- const startCol = Math.floor(Math.random() * 8 + 1);
+ const startRow = Math.floor(Math.random() * 5 + 2);
+ const startCol = Math.floor(Math.random() * 7 + 2);
  //generate empty grid
  const grid = [];
  for (let row = 0; row < totalRows; row++) {

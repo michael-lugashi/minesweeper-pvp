@@ -2,7 +2,6 @@ const { instrument } = require('@socket.io/admin-ui');
 const app = require('express')();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http, {
-    
  cors: {
   origin: [
    'http://localhost:3001',
@@ -17,6 +16,7 @@ const port = 8080;
 const userPair = [];
 const { nanoid } = require('nanoid');
 const generateBoard = require('./utils/generateBoard');
+const updateGrid = require('./utils/update-grid');
 
 io.on('connection', (socket) => {
  userPair.push(socket.id);
@@ -25,16 +25,16 @@ io.on('connection', (socket) => {
  //  socket.on('message', ({ name, message }) => {
  //   io.emit('messageBack', { name, message });
  //  });
- socket.on('square-move', ({ rowNum, colNum, roomId }) => {
-  console.log(rowNum + '_' + colNum);
-  socket
-   .to(roomId)
-   .emit('update-opponent-grid', { grid: rowNum + 'opp' + colNum });
-  io.to(socket.id).emit('update-grid', { gird: rowNum + 'your' + colNum });
+ socket.on('square-move', ({ grid, rowNum, colNum, roomId }) => {
+  const updatedGrid = updateGrid(grid, rowNum, colNum);
+  socket.to(roomId).emit('update-opponent-grid', { grid: updatedGrid });
+  io.to(socket.id).emit('update-grid', { grid: updatedGrid });
  });
 
- socket.on('disconnect', () => {
-  socket.emit('messageBack', { message: 'disconnected' });
+ socket.on('flag-square', ({ grid, rowNum, colNum, roomId }) => {
+  grid[rowNum][colNum].isFlagged =  !grid[rowNum][colNum].isFlagged;
+  socket.to(roomId).emit('update-opponent-grid', { grid });
+  io.to(socket.id).emit('update-grid', { grid });
  });
 });
 
@@ -55,7 +55,7 @@ const checkUserPair = (socket) => {
    //   io.to(socket.id).emit('update-grid', { grid });
    //   io.to(pair[0]).emit('update-grid', { grid });
    //   io.to(pair[1]).emit('update-grid', { grid });
-   io.to(_roomId).emit('update-opponent-grid', { grid }); 
+   io.to(_roomId).emit('update-opponent-grid', { grid });
   }, 1000);
  }
 };

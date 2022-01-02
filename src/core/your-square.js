@@ -1,11 +1,13 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import socketContext from '../contexts/socket-connection/socket-context';
 
 function YourSquare({
  square: { isFlagged, isRevealed, value, isStartingSquare },
  rowNum,
  colNum,
- grid
+ grid,
+ firstClick,
+ setFirstClick,
 }) {
  const { socketConnection, roomId } = useContext(socketContext);
  const gridColorDecider = (rowNum, colNum) => {
@@ -51,8 +53,30 @@ function YourSquare({
       } ${isRevealed && value ? 'value' + value : ''}
       ${isStartingSquare ? 'starting-square' : ''}`}
    onClick={() => {
-    if (socketConnection.current) {
-     socketConnection.current.emit('square-move', {grid ,rowNum, colNum, roomId });
+    if (firstClick && !isStartingSquare) {
+     return;
+    }
+
+    if (roomId && !isRevealed) {
+     setFirstClick(false);
+     console.log('click');
+     socketConnection.current.emit('square-move', {
+      grid,
+      rowNum,
+      colNum,
+      roomId,
+     });
+    }
+   }}
+   onContextMenu={(e) => {
+    e.preventDefault();
+    if (roomId && !isRevealed && !firstClick) {
+     socketConnection.current.emit('flag-square', {
+      grid,
+      rowNum,
+      colNum,
+      roomId,
+     });
     }
    }}
   >
