@@ -9,7 +9,7 @@ function Header(props) {
  const [gameStarted, setGameStarted] = useState(false);
  const [seconds, setSeconds] = useState(5);
  const { socketConnection, roomId, setRoomId } = useContext(socketContext);
- useEffect(() => {
+ React.useEffect(() => {
   if (inGame) {
    socketConnection.current = io.connect('http://localhost:8080');
    socketConnection.current.on('connect', () => {
@@ -36,7 +36,7 @@ function Header(props) {
   }
  }, [inGame]);
 
- useEffect(() => {
+React.useEffect(() => {
   if (inGame) {
    socketConnection.current.on('you-lost', () => {
     swal('You Lost!', 'Better luck next time!', 'error');
@@ -53,7 +53,7 @@ function Header(props) {
   }
  }, [inGame, seconds]);
 
- useEffect(() => {
+ React.useEffect(() => {
   let secondIntervalId = null;
   if (gameStarted) {
    secondIntervalId = setInterval(() => {
