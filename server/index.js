@@ -34,14 +34,14 @@ io.on('connection', (socket) => {
 
   const gameStatus = checkGameOver(updatedGrid);
   if (gameStatus === 'lost') {
-   socket.to(roomId).emit('you-won', {type: 'mine'});
+   socket.to(roomId).emit('you-won', { type: 'mine' });
    io.to(socket.id).emit('you-lost');
   }
 
   if (gameStatus === 'won') {
-    socket.to(roomId).emit('you-lost');
-    io.to(socket.id).emit('you-won', {type: 'completion'});
-   }
+   socket.to(roomId).emit('you-lost');
+   io.to(socket.id).emit('you-won', { type: 'completion' });
+  }
  });
 
  socket.on('flag-square', ({ grid, rowNum, colNum, roomId }) => {
@@ -56,6 +56,10 @@ io.on('connection', (socket) => {
    type: 'flag',
    addedFlag: grid[rowNum][colNum].isFlagged,
   });
+ });
+ socket.on('gameOver', () => {
+  console.log('disconnect');
+  socket.disconnect(0);
  });
 });
 

@@ -22,6 +22,10 @@ function Header(props) {
    });
 
    socketConnection.current.on('disconnect', () => {
+    setRoomId(null);
+    setSeconds(5);
+    setInGame(false);
+    setGameStarted(false);
     console.log('disconnect');
    });
    socketConnection.current.on('update-grid', () => {
@@ -38,16 +42,16 @@ function Header(props) {
  useEffect(() => {
   if (inGame) {
    socketConnection.current.on('you-lost', () => {
-    setGameStarted(false);
     swal('You Lost!', 'Better luck next time!', 'error');
+    socketConnection.current.emit('gameOver');
    });
    socketConnection.current.on('you-won', ({ type }) => {
-    setGameStarted(false);
     if (type === 'completion') {
      swal('You Won!', `It took you ${seconds} seconds!`, 'success');
     } else {
      swal('You Won!', 'Take cover! Your opponents mine went off!', 'success');
     }
+    socketConnection.current.emit('gameOver');
    });
   }
  }, [inGame, seconds]);

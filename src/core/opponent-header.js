@@ -19,6 +19,9 @@ function OpponentHeader(props) {
      }
     }
    );
+   socketConnection.current.on('disconnect', () => {
+    setFlagCount(10);
+   });
   }
  }, [socketConnection, roomId]);
 
