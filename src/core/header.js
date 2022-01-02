@@ -9,16 +9,15 @@ function Header(props) {
  const [gameStarted, setGameStarted] = useState(false);
  const [seconds, setSeconds] = useState(5);
  const { socketConnection, roomId, setRoomId } = useContext(socketContext);
- useEffect(() => {
+ React.useEffect(() => {
   if (inGame) {
    socketConnection.current = io.connect('http://localhost:8080');
    socketConnection.current.on('connect', () => {
-    console.log('connect');
    });
 
    socketConnection.current.on('joined-room', ({ _roomId }) => {
     setRoomId(_roomId);
-    console.log('joined Room:' + _roomId);
+    // console.log('joined Room:' + _roomId);
    });
 
    socketConnection.current.on('disconnect', () => {
@@ -26,20 +25,18 @@ function Header(props) {
     setSeconds(5);
     setInGame(false);
     setGameStarted(false);
-    console.log('disconnect');
    });
    socketConnection.current.on('update-grid', () => {
     setGameStarted(true);
    });
 
    socketConnection.current.on('update-time', ({ _seconds }) => {
-    console.log('updated');
     setSeconds(() => _seconds);
    });
   }
  }, [inGame]);
 
- useEffect(() => {
+React.useEffect(() => {
   if (inGame) {
    socketConnection.current.on('you-lost', () => {
     swal('You Lost!', 'Better luck next time!', 'error');
@@ -56,7 +53,7 @@ function Header(props) {
   }
  }, [inGame, seconds]);
 
- useEffect(() => {
+ React.useEffect(() => {
   let secondIntervalId = null;
   if (gameStarted) {
    secondIntervalId = setInterval(() => {
