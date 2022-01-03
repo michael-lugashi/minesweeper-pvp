@@ -6,7 +6,8 @@ const cors = require('cors');
 const { nanoid } = require('nanoid');
 const generateBoard = require('./utils/generateBoard');
 const updateGrid = require('./utils/update-grid');
-const port = 8080;
+require('dotenv').config()
+const port = process.env.PORT || 8080;
 
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
